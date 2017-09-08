@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+	rel="stylesheet" media="screen" />
+
+<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+	th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+<link href="../../static/css/guru.css" th:href="@{css/guru.css}"
+	rel="stylesheet" media="screen" />
+</head>
+<body>
+<div class="container">
+    <div th:fragment="base">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#" th:href="@{/}">Home</a>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#" th:href="@{/mail}">Mail</a></li>
+                        <li><a href="#" th:href="@{/mail/new}">New</a></li>
+                    </ul>
+                    <p class="navbar-text navbar-right">Signed in as</p>
+						<ul class="nav navbar-nav navbar-right">
+							<li>
+								<a href="">Logout</a>
+							</li>
+						</ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+</body>
+</html>
