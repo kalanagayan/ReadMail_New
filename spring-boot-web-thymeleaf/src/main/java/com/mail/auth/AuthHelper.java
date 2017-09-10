@@ -14,7 +14,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-public class AuthHelper {
+public class AuthHelper{
 	private static final String authority = "https://login.microsoftonline.com";
 	private static final String authorizeUrl = authority + "/common/oauth2/v2.0/authorize";
 	
@@ -40,6 +40,7 @@ public class AuthHelper {
 				return null;
 			}
 		}
+		System.out.println("......................."+appId);
 		return appId;
 	}
 	private static String getAppPassword() {
@@ -50,6 +51,7 @@ public class AuthHelper {
 				return null;
 			}
 		}
+		System.out.println("......................."+appPassword);
 		return appPassword;
 	}
 	
@@ -61,6 +63,7 @@ public class AuthHelper {
 				return null;
 			}
 		}
+		System.out.println("......................."+redirectUrl);
 		return redirectUrl;
 	}
 	
@@ -81,8 +84,11 @@ public class AuthHelper {
 			try {
 				authProps.load(authConfigStream);
 				appId = authProps.getProperty("appId");
+				System.out.println("................."+appId);
 				appPassword = authProps.getProperty("appPassword");
+				System.out.println(".................."+appPassword);
 				redirectUrl = authProps.getProperty("redirectUrl");
+				System.out.println("................."+redirectUrl);
 			} finally {
 				authConfigStream.close();
 			}
@@ -108,26 +114,31 @@ public class AuthHelper {
 	
 	public static TokenResponse getTokenFromAuthCode(String authCode, String tenantId) {
 		// Create a logging interceptor to log request and responses
+		System.out.println("-------------------------(1)");
 		HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
 		interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-		
+		System.out.println("-------------------------(2)");
 		OkHttpClient client = new OkHttpClient.Builder()
 				.addInterceptor(interceptor).build();
-		
+		System.out.println("-------------------------(3)");
 		// Create and configure the Retrofit object
 		Retrofit retrofit = new Retrofit.Builder()
 				.baseUrl(authority)
 				.client(client)
 				.addConverterFactory(JacksonConverterFactory.create())
 				.build();
-		
+		System.out.println("-------------------------(4)");
 		// Generate the token service
 		TokenService tokenService = retrofit.create(TokenService.class);
-		
+		System.out.println("-------------------------(5)");
 		try {
+			System.out.println("-------------------------(6)");
+			System.out.println("-------------------------"+tenantId);
+			System.out.println("-------------------------"+authCode);
 			return tokenService.getAccessTokenFromAuthCode(tenantId, getAppId(), getAppPassword(), 
 					"authorization_code", authCode, getRedirectUrl()).execute().body();
 		} catch (IOException e) {
+			System.out.println("------------------------error1 hit");
 			TokenResponse error = new TokenResponse();
 			error.setError("IOException");
 			error.setErrorDescription(e.getMessage());

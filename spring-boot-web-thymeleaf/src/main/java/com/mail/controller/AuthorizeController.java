@@ -36,7 +36,9 @@ public class AuthorizeController {
 		if (state.equals(expectedState)) {
 			IdToken idTokenObj = IdToken.parseEncodedToken(idToken, expectedNonce.toString());
 			if (idTokenObj != null) {
+				System.out.println("-------------------------(7)");
 				TokenResponse tokenResponse = AuthHelper.getTokenFromAuthCode(code, idTokenObj.getTenantId());
+				System.out.println("-------------------------(8)");
 				session.setAttribute("tokens", tokenResponse);
 				session.setAttribute("userConnected", true);
 				session.setAttribute("userName", idTokenObj.getName());
